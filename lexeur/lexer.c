@@ -398,6 +398,7 @@ void get_symbol() {
   // reset previously scanned symbol
   symbol = SYM_EOF;
 
+  // This function assumes that the variable character has already been set to the current character to test.
   if (find_next_character() != CHAR_EOF) {
     // Here comes the code of the lexer automata
     number_of_scanned_symbols = number_of_scanned_symbols + 1;
