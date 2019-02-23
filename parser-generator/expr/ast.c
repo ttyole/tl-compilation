@@ -42,8 +42,8 @@ uint64_t* quadruple(uint64_t* fst, uint64_t* snd, uint64_t* thr, uint64_t* frth)
   uint64_t* pair = zalloc(4*SIZEOFUINT64STAR);
   array_set(pair, 0, fst);
   array_set(pair, 1, snd);
-  array_set(pair, 2, frth);
-  array_set(pair, 3, thr);
+  array_set(pair, 2, thr);
+  array_set(pair, 3, frth);
   return pair;
 }
 
