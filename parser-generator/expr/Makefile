@@ -42,8 +42,14 @@ cstar: ${OBJS} main-cstar.o
 
 test: $(TESTS) cstar
 	@for i in $(TESTS); do \
-		echo "$$i..."; \
+		echo "==========\n$$i"; \
 		./cstar -c $$i; \
+		rc=$$?;\
+		RED='\033[0;31m'; \
+		GREEN='\033[0;32m'; \
+		NC='\033[0m' ; \
+		printf "$$i : "; \
+		if [ $$rc != "0" ]; then printf "$${RED}KO$${NC}\n"; else printf "$${GREEN}OK$${NC}\n"; fi ;\
 	done
 
 
