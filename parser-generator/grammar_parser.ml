@@ -9,6 +9,7 @@ let parse_grammar file : string list * string list * (string * string list * str
   let ic = open_in file in
   let lexbuf = Lexing.from_channel ic in
   let (toks,nts,rules) = main token lexbuf in
+  let (toks,nts) = (cleardup toks, cleardup nts) in
   let h = Hashtbl.create (List.length nts) in
   List.iter ( fun (nt,p,a) ->
       match Hashtbl.find_opt h nt with
