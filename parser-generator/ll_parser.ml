@@ -137,7 +137,9 @@ let print_grammar (toks,nts,rules) oc () =
   let counter = ref 1 in
   Printf.fprintf oc "<table>" ;
   List.iter (fun nt  ->
-      let rules = Hashtbl.find (grammar_hash (toks,nts,rules)) nt in
+      let rules = try Hashtbl.find (grammar_hash (toks,nts,rules)) nt
+        with _ -> Printf.printf "Couldn't find derivation for non-terminal %s\n" nt; []
+      in
       let first_rule = ref true in
       List.iter ( fun (rule,act) ->
           Printf.fprintf oc " <tr id='rule-%d' style='%s;'><td class='left'>(%d)</td> <td class='left'> %s </td class='left'> <td class='left'> -> </td> <td class='left'> %s</td><td class='left'><pre>%s</pre></td></tr>\n"
