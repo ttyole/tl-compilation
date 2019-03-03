@@ -3,11 +3,11 @@ open Ll_parser
 open Printing
 
 
-let grammar_file = ref "grammar.g"
+let grammar_file = ref "expr_grammar.g"
 let table_file = ref "table.html"
-let parser_c_file = ref "generated_parser.c"
-let parser_h_file = ref "generated_parser.h"
-let parser_dir = ref "Solution"
+let parser_c_file = ref "expr_parser.c"
+let parser_h_file = ref "expr_parser.h"
+let parser_dir = ref "expr"
 
 let int_of_lltype = function
   | First i
