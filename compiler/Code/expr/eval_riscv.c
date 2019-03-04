@@ -191,6 +191,7 @@ uint64_t eval_riscv_prog(uint64_t* prog){
   riscv_stack = zalloc(riscv_stack_size);
   riscv_state = nil();
   riscv_state = assoc_set(riscv_state, (uint64_t*)REG_SP, (uint64_t*)(riscv_stack_size));
+  setup_labels(prog);
   uint64_t v = eval_riscv_at(prog, 0);
   if(debug_riscv){
     dump_riscv_state();

@@ -20,9 +20,8 @@
 
 
 void print_cstar_usage() {
-  printf2((uint64_t*) "%s: usage: cstar { %s } \n",
-    get_myname(),
-      (uint64_t*) "-c { source } ");
+  printf1((uint64_t*) "%s: usage: cstar -c { source } [-show-ast file.dot] [-dump-ast] [-gen-riscv] [-dump-riscv] [-eval-riscv] \n",
+    get_myname());
 }
 
 
