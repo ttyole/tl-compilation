@@ -1,0 +1,7 @@
+digraph G {
+n1 [label="pair"]
+n2 [label="list"]
+n1 -> n2 [label="0"]
+n3 [label="list"]
+n1 -> n3 [label="1"]
+}
