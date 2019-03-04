@@ -13,7 +13,7 @@ uint64_t* parse_S(){
     *(p + 3) = (uint64_t) eat(SYM_EOF);
 
     
-    return pair((array_get(p,1 - 1)), (array_get(p,3 - 1)));
+    return pair(list_simp((array_get(p,1 - 1))), (array_get(p,3 - 1)));
 
   }
   if(symbol ==  SYM_RETURN){
@@ -24,7 +24,7 @@ uint64_t* parse_S(){
     *(p + 3) = (uint64_t) eat(SYM_EOF);
 
     
-    return pair((array_get(p,1 - 1)), (array_get(p,3 - 1)));
+    return pair(list_simp((array_get(p,1 - 1))), (array_get(p,3 - 1)));
 
   }
   syntax_error_message((uint64_t*) "error while parsing S");
@@ -44,7 +44,7 @@ uint64_t* parse_ASSIGNS(){
     *(p + 1) = (uint64_t) parse_ASSIGNS();
 
     
-    return pair((array_get(p,1 - 1)), (array_get(p,2 - 1)));
+    return cons((array_get(p,1 - 1)), (array_get(p,2 - 1)));
 
   }
   if(symbol ==  SYM_RETURN){
@@ -90,7 +90,8 @@ uint64_t* parse_EXPR(){
     *(p + 1) = (uint64_t) parse_TERMS();
 
     
-    return pair((array_get(p,1 - 1)), (array_get(p,2 - 1)));
+
+    return simplify_terms((array_get(p,1 - 1)), (array_get(p,2 - 1)));
 
   }
   if(symbol ==  SYM_INTEGER){
@@ -99,7 +100,8 @@ uint64_t* parse_EXPR(){
     *(p + 1) = (uint64_t) parse_TERMS();
 
     
-    return pair((array_get(p,1 - 1)), (array_get(p,2 - 1)));
+
+    return simplify_terms((array_get(p,1 - 1)), (array_get(p,2 - 1)));
 
   }
   if(symbol ==  SYM_LPARENTHESIS){
@@ -108,7 +110,8 @@ uint64_t* parse_EXPR(){
     *(p + 1) = (uint64_t) parse_TERMS();
 
     
-    return pair((array_get(p,1 - 1)), (array_get(p,2 - 1)));
+
+    return simplify_terms((array_get(p,1 - 1)), (array_get(p,2 - 1)));
 
   }
   syntax_error_message((uint64_t*) "error while parsing EXPR");
@@ -129,7 +132,7 @@ uint64_t* parse_TERM(){
     *(p + 1) = (uint64_t) parse_FACTORS();
 
     
-    return pair((array_get(p,1 - 1)), (array_get(p,2 - 1)));
+    return (array_get(p,1 - 1));
 
   }
   if(symbol ==  SYM_INTEGER){
@@ -138,7 +141,7 @@ uint64_t* parse_TERM(){
     *(p + 1) = (uint64_t) parse_FACTORS();
 
     
-    return pair((array_get(p,1 - 1)), (array_get(p,2 - 1)));
+    return (array_get(p,1 - 1));
 
   }
   if(symbol ==  SYM_LPARENTHESIS){
@@ -147,7 +150,7 @@ uint64_t* parse_TERM(){
     *(p + 1) = (uint64_t) parse_FACTORS();
 
     
-    return pair((array_get(p,1 - 1)), (array_get(p,2 - 1)));
+    return (array_get(p,1 - 1));
 
   }
   syntax_error_message((uint64_t*) "error while parsing TERM");
@@ -174,7 +177,7 @@ uint64_t* parse_TERMS(){
     *(p + 2) = (uint64_t) parse_TERMS();
 
     
-    return triple((array_get(p,1 - 1)), (array_get(p,2 - 1)), (array_get(p,3 - 1)));
+    return cons(pair(make_int(EADD), (array_get(p,2 - 1))), (array_get(p,3 - 1)));
 
   }
   if(symbol ==  SYM_MINUS){
@@ -184,7 +187,7 @@ uint64_t* parse_TERMS(){
     *(p + 2) = (uint64_t) parse_TERMS();
 
     
-    return triple((array_get(p,1 - 1)), (array_get(p,2 - 1)), (array_get(p,3 - 1)));
+    return cons(pair(make_int(ESUB), (array_get(p,2 - 1))), (array_get(p,3 - 1)));
 
   }
   if(symbol ==  SYM_RPARENTHESIS){
@@ -215,13 +218,13 @@ uint64_t* parse_FACTOR(){
     p = smalloc(1 * SIZEOFUINT64STAR);
     *(p + 0) = (uint64_t) eat(SYM_IDENTIFIER);
 
-    return (array_get(p,1 - 1));
+    return make_string((array_get(p,1 - 1)));
   }
   if(symbol ==  SYM_INTEGER){
     p = smalloc(1 * SIZEOFUINT64STAR);
     *(p + 0) = (uint64_t) eat(SYM_INTEGER);
 
-    return (array_get(p,1 - 1));
+    return pair(make_int(EINT), make_int(atoi((array_get(p,1 - 1)))));
   }
   if(symbol ==  SYM_LPARENTHESIS){
     p = smalloc(3 * SIZEOFUINT64STAR);
@@ -265,7 +268,7 @@ uint64_t* parse_FACTORS(){
     *(p + 2) = (uint64_t) parse_FACTORS();
 
     
-    return triple((array_get(p,1 - 1)), (array_get(p,2 - 1)), (array_get(p,3 - 1)));
+    return cons(triple(make_int(EMUL), (array_get(p,2 - 1)), (array_get(p,3 - 1))), nil());
 
   }
   if(symbol ==  SYM_RPARENTHESIS){
