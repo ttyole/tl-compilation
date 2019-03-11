@@ -28,7 +28,7 @@ FACTOR -> SYM_INTEGER {
     return pair(make_int(EINT), make_int(atoi($1)));
 }
 FACTOR -> SYM_IDENTIFIER {
-    return make_string($1);
+    return pair(make_int(EVAR),make_string($1));
 }
 FACTOR -> SYM_LPARENTHESIS EXPR SYM_RPARENTHESIS {
     return $2;

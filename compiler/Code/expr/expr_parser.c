@@ -216,7 +216,7 @@ uint64_t* parse_FACTOR(){
     *(p + 0) = (uint64_t) eat(SYM_IDENTIFIER);
 
     
-    return make_string((array_get(p,1 - 1)));
+    return pair(make_int(EVAR),make_string((array_get(p,1 - 1))));
 
   }
   if(symbol ==  SYM_INTEGER){
