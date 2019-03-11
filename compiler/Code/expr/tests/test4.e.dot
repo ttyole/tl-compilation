@@ -1,0 +1,17 @@
+digraph G {
+n1 [label="pair"]
+n2 [label="list"]
+n1 -> n2 [label="0"]
+n3 [label="triple"]
+n4 [label="3"]
+n3 -> n4 [label="0"]
+n5 [label="a"]
+n3 -> n5 [label="1"]
+n6 [label="pair"]
+n7 [label="0"]
+n6 -> n7 [label="0"]
+n8 [label="3"]
+n6 -> n8 [label="1"]
+n3 -> n6 [label="2"]
+n1 -> n3 [label="1"]
+}

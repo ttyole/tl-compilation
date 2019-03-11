@@ -2,21 +2,20 @@ tokens SYM_EOF SYM_IDENTIFIER SYM_INTEGER SYM_PLUS SYM_MINUS SYM_ASTERISK SYM_LP
 non-terminals S ASSIGNS ASSIGN EXPR TERM TERMS FACTOR FACTORS
 rules
 S -> ASSIGNS SYM_RETURN EXPR SYM_EOF {
-    return pair(list_simp($1), $3);
+    return pair($1, $3);
 }
 ASSIGNS -> ASSIGN ASSIGNS {
-    return cons($1, $2);
+    return cons($1,$2);
 }
 ASSIGNS -> {return nil();}
 ASSIGN -> SYM_IDENTIFIER SYM_ASSIGN EXPR SYM_SEMICOLON {
     return pair(make_string($1), $3);
 }
 EXPR -> TERM TERMS {
-
-    return simplify_terms($1, $2);
+    return make_terms($1,$2);
 }
 TERM -> FACTOR FACTORS {
-    return $1;
+    return make_terms($1,$2);
 }
 TERMS -> SYM_PLUS TERM TERMS{
     return cons(pair(make_int(EADD), $2), $3);
@@ -24,11 +23,17 @@ TERMS -> SYM_PLUS TERM TERMS{
 TERMS -> SYM_MINUS TERM TERMS{
     return cons(pair(make_int(ESUB), $2), $3);
 }
-TERMS ->  {return nil();}
-FACTOR -> SYM_INTEGER {return pair(make_int(EINT), make_int(atoi($1)));}
-FACTOR -> SYM_IDENTIFIER {return make_string($1);}
-FACTOR -> SYM_LPARENTHESIS EXPR SYM_RPARENTHESIS {return $2;}
+TERMS -> {return nil();}
+FACTOR -> SYM_INTEGER {
+    return pair(make_int(EINT), make_int(atoi($1)));
+}
+FACTOR -> SYM_IDENTIFIER {
+    return make_string($1);
+}
+FACTOR -> SYM_LPARENTHESIS EXPR SYM_RPARENTHESIS {
+    return $2;
+}
 FACTORS -> SYM_ASTERISK FACTOR FACTORS{
     return cons(triple(make_int(EMUL), $2, $3), nil());
 }
-FACTORS ->  {return nil();}
+FACTORS -> {return nil();}

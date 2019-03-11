@@ -44,9 +44,7 @@ uint64_t* next_elt(uint64_t* l);
 
 uint64_t* list_append(uint64_t* l1, uint64_t* l2);
 uint64_t* list_nth(uint64_t* l, uint64_t n);
-uint64_t* list_simp(uint64_t* l);
-
-uint64_t *simplify_terms(uint64_t *term, uint64_t *list_of_tuples);
+uint64_t* list_simp(uint64_t *l);
 
 /* Expressions */
 extern uint64_t EINT;
